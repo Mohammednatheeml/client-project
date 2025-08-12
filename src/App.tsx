@@ -7,7 +7,7 @@ import MemoryLane from './components/MemoryLane';
 import StarMap from './components/StarMap';
 import FinalSurprise from './components/FinalSurprise';
 import AudioPlayer from './components/AudioPlayer';
-import ParticleBackground from './components/ParticleBackground';
+// import ParticleBackground from './components/ParticleBackground';
 
 function App() {
   const [currentSection, setCurrentSection] = useState(0);
@@ -25,7 +25,7 @@ function App() {
   return (
     <div className="min-h-screen relative overflow-hidden">
       {/* Particle Background */}
-      <ParticleBackground />
+      {/* <ParticleBackground /> */}
       
       {/* Audio Player */}
       <AudioPlayer />

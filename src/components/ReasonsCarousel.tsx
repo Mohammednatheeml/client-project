@@ -11,9 +11,41 @@ const reasons = [
   { text: "The way you laugh at my silly jokes", emoji: "😂" },
   { text: "Your kind and caring heart", emoji: "💖" },
   { text: "How you make every day feel special", emoji: "✨" },
-  { text: "Your cozy hugs that feel like home", emoji: "🏠" },
+  { text: "Your amazing strength and determination", emoji: "💪" },
+  { text: "The way you listen and understand me", emoji: "👂" },
+  { text: "Your adorable sleepy voice in the morning", emoji: "😴" },
+  { text: "How you support my dreams", emoji: "🌟" },
+  { text: "Your incredible sense of humor", emoji: "🤣" },
+  { text: "The way you make me feel loved", emoji: "🥰" },
+  { text: "Your beautiful eyes that I get lost in", emoji: "👁️" },
+  { text: "How you always know what to say", emoji: "💬" },
+  { text: "Your passion for the things you love", emoji: "🔥" },
+  { text: "The way you dance like no one's watching", emoji: "💃" },
+  { text: "Your incredible cooking skills", emoji: "👩‍🍳" },
+  { text: "How you make me want to be better", emoji: "🌱" },
+  { text: "Your cute little habits that make me smile", emoji: "😌" },
+  { text: "The way you care for everyone around you", emoji: "🤗" },
+  { text: "Your beautiful singing voice", emoji: "🎵" },
+  { text: "Your gentle touch that calms my soul", emoji: "🤲" },
+  { text: "The way you remember the little things", emoji: "📝" },
+  { text: "Your adventurous spirit", emoji: "🗺️" },
+  { text: "How you make ordinary moments magical", emoji: "🪄" },
+  { text: "Your wisdom and thoughtful advice", emoji: "🦉" },
+  { text: "The way you blush when I compliment you", emoji: "😳" },
+  { text: "Your creativity and imagination", emoji: "🎨" },
+  { text: "How you stand up for what's right", emoji: "⚖️" },
+  { text: "Your infectious enthusiasm", emoji: "🎉" },
+  { text: "The way you hold my hand", emoji: "🤝" },
+  { text: "Your beautiful mind and intelligence", emoji: "🧠" },
+  { text: "How you make me laugh until my stomach hurts", emoji: "🤪" },
+  { text: "Your patience with my quirks", emoji: "🙏" },
   { text: "The way you look at me like I'm your world", emoji: "🌍" },
+  { text: "Your ability to find joy in simple things", emoji: "🌻" },
+  { text: "How you believe in me even when I don't", emoji: "🦋" },
+  { text: "Your cozy hugs that feel like home", emoji: "🏠" },
+  { text: "The way you make me feel safe", emoji: "🛡️" },
   { text: "Your spontaneous kisses", emoji: "💋" },
+  { text: "How you inspire me every single day", emoji: "🚀" },
   { text: "Because you're simply perfect for me", emoji: "💕" }
 ];
 
@@ -27,12 +59,13 @@ const FloatingHeart = ({ delay }: { delay: number }) => (
       rotate: Math.random() * 360
     }}
     transition={{
-      duration: 4,
+      duration: 5,
       delay,
       repeat: Infinity,
-      repeatDelay: Math.random() * 3 + 2
+      repeatDelay: Math.random() * 3 + 2,
+      ease: "easeInOut"
     }}
-    className="absolute text-2xl pointer-events-none"
+    className="absolute text-2xl pointer-events-none select-none"
     style={{
       left: `${Math.random() * 100}%`,
       bottom: '0%'
@@ -40,6 +73,33 @@ const FloatingHeart = ({ delay }: { delay: number }) => (
   >
     💖
   </motion.div>
+);
+
+const Star = ({ size, top, left, delay }: { size: number; top: number; left: number; delay: number }) => (
+  <motion.div
+    style={{
+      width: size,
+      height: size,
+      borderRadius: '50%',
+      backgroundColor: 'white',
+      position: 'absolute',
+      top: `${top}%`,
+      left: `${left}%`,
+      filter: 'drop-shadow(0 0 4px white)',
+      opacity: 0.8,
+    }}
+    animate={{
+      opacity: [0.2, 1, 0.2],
+      scale: [0.8, 1.1, 0.8],
+      rotate: [0, 15, 0],
+    }}
+    transition={{
+      repeat: Infinity,
+      duration: 3 + Math.random() * 2,
+      delay,
+      ease: "easeInOut"
+    }}
+  />
 );
 
 const ReasonsCarousel: React.FC<ReasonsCarouselProps> = ({ onComplete }) => {
@@ -88,54 +148,33 @@ const ReasonsCarousel: React.FC<ReasonsCarouselProps> = ({ onComplete }) => {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
-      {/* Soft flowing romantic gradient background */}
-      <motion.div
-        className="absolute inset-0"
-        animate={{
-          background: [
-            "linear-gradient(120deg, #ff9a9e 0%, #fecfef 100%)",
-            "linear-gradient(120deg, #fbc2eb 0%, #a6c1ee 100%)",
-            "linear-gradient(120deg, #ffdde1 0%, #ee9ca7 100%)"
-          ]
-        }}
-        transition={{
-          duration: 12,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-      />
-
-      {/* Romantic soft pattern */}
-      <motion.div
-        className="absolute inset-0 opacity-10"
-        style={{
-          backgroundImage: `radial-gradient(circle at 20px 20px, rgba(255,255,255,0.5) 2px, transparent 0),
-                             radial-gradient(circle at 60px 60px, rgba(255,255,255,0.5) 2px, transparent 0)`,
-          backgroundSize: '80px 80px'
-        }}
-        animate={{ backgroundPosition: ['0px 0px', '40px 40px', '0px 0px'] }}
-        transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut' }}
-      />
-
-      {/* Floating hearts */}
-      {Array.from({ length: 10 }).map((_, i) => (
-        <FloatingHeart key={i} delay={i * 0.5} />
+    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-[#0b1224] via-[#2c1558] to-[#190639] flex flex-col items-center justify-center px-4">
+      {[...Array(200)].map((_, i) => (
+        <Star
+          key={i}
+          size={1 + Math.random() * 2}
+          top={Math.random() * 100}
+          left={Math.random() * 100}
+          delay={Math.random() * 5}
+        />
       ))}
 
-      {/* Content */}
-      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4">
+      {Array.from({ length: 10 }).map((_, i) => (
+        <FloatingHeart key={i} delay={i * 0.7} />
+      ))}
+
+      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4 max-w-3xl w-full">
         <motion.h2
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-4xl md:text-5xl font-bold text-white mb-8 text-center"
-          style={{ fontFamily: "'Dancing Script', cursive" }}
+          className="text-5xl md:text-6xl font-serif text-white mb-10 text-center tracking-widest italic"
+          style={{ fontFamily: "'Georgia', serif" }}
         >
-          Reasons I Love You 💕
+          I Love You For
         </motion.h2>
 
-        <div className="relative w-full max-w-md h-80 flex items-center justify-center perspective-1000">
+        <div className="relative w-full h-96 perspective-1000">
           <AnimatePresence initial={false} custom={direction} mode="wait">
             <motion.div
               key={currentIndex}
@@ -161,32 +200,32 @@ const ReasonsCarousel: React.FC<ReasonsCarouselProps> = ({ onComplete }) => {
               className="absolute w-full cursor-grab active:cursor-grabbing"
             >
               <motion.div
-                className="bg-white/90 backdrop-blur-lg rounded-3xl p-6 shadow-2xl border border-white/30 text-center h-full flex flex-col justify-between"
-                whileHover={{ scale: 1.02 }}
+                className="bg-white/10 backdrop-blur-md rounded-3xl p-10 shadow-xl border border-white/20 text-center h-full flex flex-col justify-between text-white"
+                whileHover={{ scale: 1.04 }}
               >
                 <div>
                   <motion.div
-                    className="text-5xl mb-4"
+                    className="text-7xl mb-6"
                     animate={{ scale: [1, 1.1, 1] }}
                     transition={{ duration: 2, repeat: Infinity, repeatDelay: 2 }}
                   >
                     {reasons[currentIndex].emoji}
                   </motion.div>
                   <p
-                    className="text-xl text-gray-700 leading-relaxed font-medium"
-                    style={{ fontFamily: "'Playfair Display', serif" }}
+                    className="text-2xl leading-relaxed font-serif italic text-gray-200 max-w-xl mx-auto"
+                    style={{ fontFamily: "'Georgia', serif" }}
                   >
                     {reasons[currentIndex].text}
                   </p>
                 </div>
 
-                <div className="flex justify-between items-center mt-4">
-                  <button onClick={() => handleNavigation(-1)}>
-                    <ChevronLeft className="w-5 h-5 text-pink-600" />
+                <div className="flex justify-between items-center mt-8 text-pink-400">
+                  <button onClick={() => handleNavigation(-1)} aria-label="Previous reason">
+                    <ChevronLeft className="w-8 h-8 hover:text-pink-300 transition" />
                   </button>
-                  <Heart className="w-7 h-7 text-red-500 fill-current" />
-                  <button onClick={() => handleNavigation(1)}>
-                    <ChevronRight className="w-5 h-5 text-pink-600" />
+                  <Heart className="w-10 h-10 fill-pink-500 drop-shadow-lg" />
+                  <button onClick={() => handleNavigation(1)} aria-label="Next reason">
+                    <ChevronRight className="w-8 h-8 hover:text-pink-300 transition" />
                   </button>
                 </div>
               </motion.div>
@@ -196,15 +235,11 @@ const ReasonsCarousel: React.FC<ReasonsCarouselProps> = ({ onComplete }) => {
 
         <button
           onClick={onComplete}
-          className="mt-8 bg-gradient-to-r from-pink-500 to-red-400 text-white px-6 py-3 rounded-full font-semibold shadow-lg"
+          className="mt-12 bg-gradient-to-r from-pink-600 to-purple-600 text-white px-10 py-4 rounded-full font-semibold shadow-lg hover:shadow-2xl transition"
         >
           Continue to Memory Lane 🌸
         </button>
       </div>
-
-      <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:wght@500;600&display=swap');
-      `}</style>
     </div>
   );
 };

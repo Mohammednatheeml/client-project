@@ -1,7 +1,7 @@
 import React, { useState, useRef, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Stars, Float } from '@react-three/drei';
+import { Stars } from '@react-three/drei';
 import { X, Heart } from 'lucide-react';
 
 interface StarMapProps {
@@ -23,7 +23,7 @@ const loveNotes = [
 
 const AnimatedStars: React.FC = () => {
   const groupRef = useRef<THREE.Group>(null);
-  
+
   useFrame((state) => {
     if (groupRef.current) {
       groupRef.current.rotation.y = state.clock.elapsedTime * 0.05;
@@ -33,15 +33,7 @@ const AnimatedStars: React.FC = () => {
 
   return (
     <group ref={groupRef}>
-      <Stars 
-        radius={100} 
-        depth={50} 
-        count={5000} 
-        factor={4} 
-        saturation={0} 
-        fade 
-        speed={1}
-      />
+      <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
     </group>
   );
 };
@@ -60,8 +52,7 @@ const StarMap: React.FC<StarMapProps> = ({ onComplete }) => {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900">
-      {/* Three.js Star Background */}
+    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-pink-900 via-purple-900 to-indigo-900">
       <div className="absolute inset-0">
         <Canvas camera={{ position: [0, 0, 1] }}>
           <Suspense fallback={null}>
@@ -70,26 +61,27 @@ const StarMap: React.FC<StarMapProps> = ({ onComplete }) => {
         </Canvas>
       </div>
 
-      {/* Content Overlay */}
       <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4">
+        {/* Heading */}
         <motion.h2
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-4xl md:text-6xl font-dancing text-white mb-8 text-center"
+          className="text-5xl md:text-7xl font-serif italic text-white mb-8 text-center tracking-widest drop-shadow-lg"
         >
           Our Love Constellation ⭐
         </motion.h2>
 
+        {/* Subheading */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}
-          className="text-xl text-white/80 font-medium text-center mb-12 max-w-2xl"
+          className="text-xl text-white/80 italic font-light text-center mb-12 max-w-2xl tracking-wide drop-shadow-md"
         >
           Click on the glowing stars to reveal hidden love notes written just for you 💫
         </motion.p>
 
-        {/* Interactive Stars Grid */}
+        {/* Stars Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 md:gap-8 mb-12">
           {loveNotes.map((_, index) => (
             <motion.button
@@ -97,50 +89,27 @@ const StarMap: React.FC<StarMapProps> = ({ onComplete }) => {
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 1.5 + index * 0.1 }}
-              whileHover={{ 
+              whileHover={{
                 scale: 1.3,
-                filter: "brightness(1.5)",
-                rotate: [0, -5, 5, 0]
+                filter: "brightness(1.6)",
+                boxShadow: "0 0 25px rgba(255, 105, 180, 0.8)"
               }}
               whileTap={{ scale: 0.9 }}
               onClick={() => handleStarClick(index)}
               className={`relative w-16 h-16 rounded-full flex items-center justify-center transition-all duration-300 ${
-                clickedStars.has(index) 
-                  ? 'bg-gradient-to-r from-pink-400 to-purple-500 shadow-lg shadow-pink-500/50' 
+                clickedStars.has(index)
+                  ? 'bg-gradient-to-r from-pink-400 to-purple-500 shadow-lg shadow-pink-500/50'
                   : 'bg-gradient-to-r from-yellow-200 to-yellow-400 shadow-lg shadow-yellow-400/50'
               }`}
             >
               <span className="text-2xl animate-pulse">
                 {clickedStars.has(index) ? '💖' : '⭐'}
               </span>
-              
-              {/* Sparkle effect */}
-              <div className="absolute inset-0 rounded-full">
-                {[...Array(4)].map((_, sparkleIndex) => (
-                  <motion.div
-                    key={sparkleIndex}
-                    className="absolute w-1 h-1 bg-white rounded-full"
-                    style={{
-                      top: `${Math.random() * 100}%`,
-                      left: `${Math.random() * 100}%`,
-                    }}
-                    animate={{
-                      opacity: [0, 1, 0],
-                      scale: [0, 1, 0],
-                    }}
-                    transition={{
-                      duration: 1.5,
-                      repeat: Infinity,
-                      delay: sparkleIndex * 0.3,
-                    }}
-                  />
-                ))}
-              </div>
             </motion.button>
           ))}
         </div>
 
-        {/* Progress indicator */}
+        {/* Progress Bar */}
         <div className="mb-8">
           <p className="text-white/70 text-center">
             Discovered: {clickedStars.size} / {loveNotes.length} love notes
@@ -155,6 +124,7 @@ const StarMap: React.FC<StarMapProps> = ({ onComplete }) => {
           </div>
         </div>
 
+        {/* Final button */}
         {clickedStars.size === loveNotes.length && (
           <motion.button
             initial={{ opacity: 0, scale: 0.8 }}
@@ -170,7 +140,7 @@ const StarMap: React.FC<StarMapProps> = ({ onComplete }) => {
         )}
       </div>
 
-      {/* Love Note Modal */}
+      {/* Modal */}
       <AnimatePresence>
         {selectedNote && (
           <motion.div
@@ -184,7 +154,7 @@ const StarMap: React.FC<StarMapProps> = ({ onComplete }) => {
               initial={{ scale: 0.5, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.5, opacity: 0 }}
-              className="bg-white/95 backdrop-blur-sm rounded-2xl p-8 max-w-md mx-auto relative"
+              className="bg-white/95 backdrop-blur-sm rounded-2xl p-8 max-w-md mx-auto relative shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
               <button
@@ -193,12 +163,16 @@ const StarMap: React.FC<StarMapProps> = ({ onComplete }) => {
               >
                 <X className="w-6 h-6 text-gray-600" />
               </button>
-              
               <div className="text-center">
                 <Heart className="w-12 h-12 text-red-500 fill-current mx-auto mb-4 animate-pulse" />
-                <p className="text-xl font-dancing text-gray-800 leading-relaxed">
+                <motion.p
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="text-xl italic font-serif text-gray-800 leading-relaxed tracking-wide drop-shadow-sm"
+                >
                   {selectedNote}
-                </p>
+                </motion.p>
               </div>
             </motion.div>
           </motion.div>

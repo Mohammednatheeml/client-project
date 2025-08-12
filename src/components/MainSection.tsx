@@ -12,78 +12,42 @@ const MainSection: React.FC<MainSectionProps> = ({ onComplete }) => {
   const [showSecondLine, setShowSecondLine] = useState(false);
   const [showThirdLine, setShowThirdLine] = useState(false);
 
-  // Initialize tsParticles for floating particles
   useEffect(() => {
     const initParticles = async () => {
       await loadFull();
       await (window as any).tsParticles.load("tsparticles", {
         particles: {
-          number: {
-            value: 40,
-            density: {
-              enable: true,
-              area: 800
-            }
-          },
-          color: {
-            value: ["#d4af37", "#c0c0c0", "#ffffff"]
-          },
-          shape: {
-            type: ["circle", "triangle"],
-            stroke: {
-              width: 0,
-              color: "#000000"
-            },
-          },
+          number: { value: 50, density: { enable: true, area: 900 } },
+          color: { value: "#ffffff" },
+          shape: { type: "circle" },
           opacity: {
-            value: { min: 0.3, max: 0.8 },
+            value: { min: 0.2, max: 0.7 },
             random: true,
-            animation: {
-              enable: true,
-              speed: 1,
-              minimumValue: 0.1
-            }
+            animation: { enable: true, speed: 0.5, minimumValue: 0.2 },
           },
-          size: {
-            value: { min: 1, max: 3 },
-            random: true
-          },
+          size: { value: { min: 1, max: 2 }, random: true },
           move: {
             enable: true,
-            speed: 1,
+            speed: 0.3,
             direction: "none",
             random: true,
             straight: false,
-            outModes: {
-              default: "out"
-            }
+            outModes: { default: "out" },
           },
-          wobble: {
-            distance: 5,
-            enable: true,
-            speed: {
-              min: -1,
-              max: 1
-            }
-          }
+          twinkle: {
+            particles: {
+              enable: true,
+              frequency: 0.05,
+              opacity: 1,
+            },
+          },
         },
         interactivity: {
-          events: {
-            onHover: {
-              enable: true,
-              mode: "repulse"
-            }
-          },
-          modes: {
-            repulse: {
-              distance: 100,
-              duration: 0.4
-            }
-          }
+          events: { onHover: { enable: true, mode: "grab" } },
+          modes: { grab: { distance: 150, line_linked: { opacity: 0.3 } } },
         },
-        background: {
-          color: "transparent"
-        }
+        retina_detect: true,
+        background: { color: "transparent" },
       });
     };
 
@@ -94,52 +58,27 @@ const MainSection: React.FC<MainSectionProps> = ({ onComplete }) => {
     <div
       className="min-h-screen flex flex-col items-center justify-center px-6 relative overflow-hidden"
       style={{
-        fontFamily: "'Cormorant Garamond', serif",
-        background: `
-          radial-gradient(ellipse at 20% 20%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
-          radial-gradient(ellipse at 80% 80%, rgba(192, 192, 192, 0.1) 0%, transparent 50%),
-          linear-gradient(to bottom right, 
-            #1a1a1a 0%, 
-            #2d2d2d 20%, 
-            #3d3d3d 40%, 
-            #2a2a2a 60%, 
-            #1f1f1f 80%, 
-            #121212 100%
-          )
-        `,
-        boxShadow: "inset 0 0 100px rgba(212, 175, 55, 0.1)"
+        fontFamily: "'Merriweather', serif",
+        background: `linear-gradient(135deg, #6a11cb 0%, #2575fc 100%)`,
+        color: "#f0f0f5",
+        boxShadow: "inset 0 0 100px rgba(255, 255, 255, 0.1)",
       }}
     >
-      {/* Floating particles */}
+      {/* Star map particles */}
       <div id="tsparticles" className="absolute inset-0 z-0" />
-      
-      {/* Elegant overlay */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {[...Array(15)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute border border-dotted border-opacity-20 rounded-full"
-            style={{
-              width: `${Math.random() * 300 + 100}px`,
-              height: `${Math.random() * 300 + 100}px`,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              borderColor: "#d4af37",
-              opacity: 0
-            }}
-            animate={{
-              opacity: [0, 0.3, 0],
-              scale: [1, 1.2, 1]
-            }}
-            transition={{
-              duration: 10 + Math.random() * 20,
-              repeat: Infinity,
-              repeatDelay: Math.random() * 10,
-              ease: "linear"
-            }}
-          />
-        ))}
-      </div>
+
+      {/* Subtle glowing overlays */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(circle at 30% 30%, rgba(255,255,255,0.15), transparent 60%)," +
+            "radial-gradient(circle at 70% 70%, rgba(255,255,255,0.15), transparent 60%)",
+          filter: "blur(60px)",
+          zIndex: 1,
+        }}
+      />
 
       <motion.div
         initial={{ opacity: 0, y: 40 }}
@@ -148,29 +87,39 @@ const MainSection: React.FC<MainSectionProps> = ({ onComplete }) => {
         className="max-w-4xl relative z-10 w-full px-4"
       >
         <h1
-          className="text-3xl md:text-5xl lg:text-6xl font-bold mb-8 text-left"
+          className="text-3xl md:text-5xl lg:text-6xl font-extrabold mb-8 text-left"
           style={{
-            color: "#d4af37",
+            color: "#ffffff",
             lineHeight: 1.3,
-            letterSpacing: "0.05em",
-            textShadow: "0 2px 10px rgba(212, 175, 55, 0.3)",
-            fontVariationSettings: "'wght' 700, 'opsz' 60"
+            letterSpacing: "0.07em",
+            textShadow: "0 4px 12px rgba(255, 255, 255, 0.8)",
+            fontVariationSettings: "'wght' 800, 'opsz' 72",
           }}
         >
           <Typewriter
             onInit={(typewriter) => {
               typewriter
-                .typeString("Happy Birthday,")
-                .pauseFor(1000)
                 .typeString("<br>My Dearest Love")
-                .pauseFor(2000)
+                .pauseFor(1000)
                 .typeString("<br>My Eternal Flame")
                 .pauseFor(2000)
                 .typeString("<br>My Precious One")
                 .pauseFor(2000)
                 .typeString("<br>My Heart's Desire ")
                 .pauseFor(2000)
-                .typeString("<br>I Love You Shaheen")
+                .typeString("<br>My Guiding Star")
+                .pauseFor(2000)
+                .typeString("<br>My Everything")
+                .pauseFor(2000)
+                .typeString("<br>My Forever Love")
+                .pauseFor(2000)
+                .typeString("<br>My One and Only")
+                .pauseFor(2000)
+                .typeString("<br>3...2...1..")
+                .pauseFor(3000)
+                .typeString("<br>Happy Birthday Baby!")
+                .pauseFor(2000)
+                .typeString("<br>I Love You Soo Much")
                 .pauseFor(2000)
                 .callFunction(() => {
                   setShowSecondLine(true);
@@ -178,10 +127,10 @@ const MainSection: React.FC<MainSectionProps> = ({ onComplete }) => {
                 .start();
             }}
             options={{
-              delay: 100,
+              delay: 90,
               cursor: "|",
               wrapperClassName: "inline-block",
-              cursorClassName: "text-yellow-500 animate-pulse",
+              cursorClassName: "text-white animate-pulse",
             }}
           />
         </h1>
@@ -192,8 +141,9 @@ const MainSection: React.FC<MainSectionProps> = ({ onComplete }) => {
           transition={{ delay: 3, duration: 2, ease: "easeInOut" }}
           className="text-lg md:text-xl font-medium mb-10 leading-relaxed text-left"
           style={{
-            color: "#c0c0c0",
-            textShadow: "0 1px 3px rgba(0, 0, 0, 0.5)",
+            color: "#dce6f7",
+            textShadow: "0 1px 5px rgba(0, 0, 0, 0.4)",
+            fontStyle: "italic",
           }}
         >
           {showSecondLine && (
@@ -201,14 +151,16 @@ const MainSection: React.FC<MainSectionProps> = ({ onComplete }) => {
               <Typewriter
                 onInit={(typewriter) => {
                   typewriter
-                    .typeString("Though distance may separate us, our souls remain intertwined.")
+                    .typeString(
+                      "Though distance may separate us, our souls remain intertwined."
+                    )
                     .callFunction(() => setShowThirdLine(true))
                     .start();
                 }}
                 options={{
-                  delay: 30,
+                  delay: 40,
                   cursor: "",
-                  wrapperClassName: "inline-block"
+                  wrapperClassName: "inline-block",
                 }}
               />
             </div>
@@ -219,14 +171,16 @@ const MainSection: React.FC<MainSectionProps> = ({ onComplete }) => {
               <Typewriter
                 onInit={(typewriter) => {
                   typewriter
-                    .typeString("Today we celebrate the radiant light you bring to this world.")
+                    .typeString(
+                      "Today we celebrate the radiant light you bring to this world."
+                    )
                     .callFunction(() => setShowButton(true))
                     .start();
                 }}
                 options={{
-                  delay: 30,
+                  delay: 40,
                   cursor: "",
-                  wrapperClassName: "inline-block"
+                  wrapperClassName: "inline-block",
                 }}
               />
             </div>
@@ -240,32 +194,21 @@ const MainSection: React.FC<MainSectionProps> = ({ onComplete }) => {
             transition={{ duration: 2, ease: "easeInOut" }}
             whileHover={{
               scale: 1.05,
-              boxShadow: "0 10px 25px rgba(212, 175, 55, 0.3)",
+              boxShadow: "0 10px 25px rgba(255, 255, 255, 0.6)",
             }}
             whileTap={{ scale: 0.95 }}
             onClick={onComplete}
-            className="px-10 py-4 rounded-sm text-lg md:text-xl font-semibold shadow-md transition-all duration-400 border border-d4af37"
+            className="px-10 py-4 rounded-md text-lg md:text-xl font-semibold shadow-md transition-all duration-400 border border-white"
             style={{
               background: "transparent",
-              color: "#d4af37",
-              borderColor: "#d4af37",
+              color: "#fff",
+              borderColor: "#fff",
             }}
           >
             Continue to Your Gift
           </motion.button>
         )}
       </motion.div>
-
-      {/* Subtle glow effect */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background: "radial-gradient(ellipse at center, rgba(212, 175, 55, 0.1), transparent 70%)",
-          filter: "blur(40px)",
-          zIndex: 1,
-        }}
-      />
     </div>
   );
 };
