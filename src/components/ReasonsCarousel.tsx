@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Heart } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronLeft, ChevronRight, Heart } from "lucide-react";
 
 interface ReasonsCarouselProps {
   onComplete: () => void;
@@ -46,9 +46,10 @@ const reasons = [
   { text: "The way you make me feel safe", emoji: "🛡️" },
   { text: "Your spontaneous kisses", emoji: "💋" },
   { text: "How you inspire me every single day", emoji: "🚀" },
-  { text: "Because you're simply perfect for me", emoji: "💕" }
+  { text: "Because you're simply perfect for me", emoji: "💕" },
 ];
 
+// Floating hearts
 const FloatingHeart = ({ delay }: { delay: number }) => (
   <motion.div
     initial={{ opacity: 0, y: 100, x: Math.random() * 100 - 50 }}
@@ -56,36 +57,44 @@ const FloatingHeart = ({ delay }: { delay: number }) => (
       opacity: [0, 1, 0],
       y: -120,
       x: Math.random() * 200 - 100,
-      rotate: Math.random() * 360
+      rotate: Math.random() * 360,
     }}
     transition={{
       duration: 5,
       delay,
       repeat: Infinity,
       repeatDelay: Math.random() * 3 + 2,
-      ease: "easeInOut"
+      ease: "easeInOut",
     }}
     className="absolute text-2xl pointer-events-none select-none"
-    style={{
-      left: `${Math.random() * 100}%`,
-      bottom: '0%'
-    }}
+    style={{ left: `${Math.random() * 100}%`, bottom: "0%" }}
   >
     💖
   </motion.div>
 );
 
-const Star = ({ size, top, left, delay }: { size: number; top: number; left: number; delay: number }) => (
+// Stars
+const Star = ({
+  size,
+  top,
+  left,
+  delay,
+}: {
+  size: number;
+  top: number;
+  left: number;
+  delay: number;
+}) => (
   <motion.div
     style={{
       width: size,
       height: size,
-      borderRadius: '50%',
-      backgroundColor: 'white',
-      position: 'absolute',
+      borderRadius: "50%",
+      backgroundColor: "white",
+      position: "absolute",
       top: `${top}%`,
       left: `${left}%`,
-      filter: 'drop-shadow(0 0 4px white)',
+      filter: "drop-shadow(0 0 4px white)",
       opacity: 0.8,
     }}
     animate={{
@@ -97,8 +106,17 @@ const Star = ({ size, top, left, delay }: { size: number; top: number; left: num
       repeat: Infinity,
       duration: 3 + Math.random() * 2,
       delay,
-      ease: "easeInOut"
+      ease: "easeInOut",
     }}
+  />
+);
+
+const Moon = () => (
+  <motion.div
+    className="absolute w-32 h-32 rounded-full bg-yellow-200 shadow-[0_0_60px_15px_rgba(255,255,200,0.5)]"
+    style={{ top: "10%", right: "10%" }}
+    animate={{ y: [0, 10, 0] }}
+    transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
   />
 );
 
@@ -117,27 +135,32 @@ const ReasonsCarousel: React.FC<ReasonsCarouselProps> = ({ onComplete }) => {
     enter: (direction: number) => ({
       x: direction > 0 ? 400 : -400,
       opacity: 0,
-      scale: 0.9,
-      rotateY: direction > 0 ? 45 : -45
+      scale: 0.8,
+      rotateY: direction > 0 ? 45 : -45,
     }),
     center: { x: 0, opacity: 1, scale: 1, rotateY: 0 },
     exit: (direction: number) => ({
       x: direction < 0 ? 400 : -400,
       opacity: 0,
-      scale: 0.9,
-      rotateY: direction < 0 ? 45 : -45
-    })
+      scale: 0.8,
+      rotateY: direction < 0 ? 45 : -45,
+    }),
   };
 
   const swipeConfidenceThreshold = 8000;
-  const swipePower = (offset: number, velocity: number) => Math.abs(offset) * velocity;
+  const swipePower = (offset: number, velocity: number) =>
+    Math.abs(offset) * velocity;
 
   const paginate = (newDirection: number) => {
     setDirection(newDirection);
     setCurrentIndex((prev) =>
       newDirection === 1
-        ? prev === reasons.length - 1 ? 0 : prev + 1
-        : prev === 0 ? reasons.length - 1 : prev - 1
+        ? prev === reasons.length - 1
+          ? 0
+          : prev + 1
+        : prev === 0
+        ? reasons.length - 1
+        : prev - 1
     );
   };
 
@@ -149,6 +172,10 @@ const ReasonsCarousel: React.FC<ReasonsCarouselProps> = ({ onComplete }) => {
 
   return (
     <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-[#0b1224] via-[#2c1558] to-[#190639] flex flex-col items-center justify-center px-4">
+      {/* Moon */}
+      <Moon />
+
+      {/* Stars */}
       {[...Array(200)].map((_, i) => (
         <Star
           key={i}
@@ -159,72 +186,78 @@ const ReasonsCarousel: React.FC<ReasonsCarouselProps> = ({ onComplete }) => {
         />
       ))}
 
+      {/* Floating Hearts */}
       {Array.from({ length: 10 }).map((_, i) => (
         <FloatingHeart key={i} delay={i * 0.7} />
       ))}
 
+      {/* Content */}
       <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4 max-w-3xl w-full">
         <motion.h2
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-5xl md:text-6xl font-serif text-white mb-10 text-center tracking-widest italic"
-          style={{ fontFamily: "'Georgia', serif" }}
+          className="text-5xl md:text-6xl font-serif text-white mb-10 text-center tracking-wide italic"
+          style={{ fontFamily: "'Dancing Script', cursive" }}
         >
           I Love You For
         </motion.h2>
 
-        <div className="relative w-full h-96 perspective-1000">
-          <AnimatePresence initial={false} custom={direction} mode="wait">
+        <div className="relative w-full max-w-3xl h-[28rem] mx-auto flex justify-center items-center">
+          <AnimatePresence mode="wait">
             <motion.div
               key={currentIndex}
-              custom={direction}
-              variants={slideVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{
-                x: { type: "spring", stiffness: 200, damping: 25 },
-                opacity: { duration: 0.3 },
-                scale: { duration: 0.3 },
-                rotateY: { duration: 0.4 }
-              }}
-              drag="x"
-              dragConstraints={{ left: 0, right: 0 }}
-              dragElastic={0.3}
-              onDragEnd={(e, { offset, velocity }) => {
-                const swipe = swipePower(offset.x, velocity.x);
-                if (swipe < -swipeConfidenceThreshold) handleNavigation(1);
-                else if (swipe > swipeConfidenceThreshold) handleNavigation(-1);
-              }}
-              className="absolute w-full cursor-grab active:cursor-grabbing"
+              initial={{ opacity: 0, scale: 0.7, y: 60 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.7, y: -60 }}
+              transition={{ duration: 1, ease: "easeInOut" }}
+              className="absolute w-full"
             >
               <motion.div
-                className="bg-white/10 backdrop-blur-md rounded-3xl p-10 shadow-xl border border-white/20 text-center h-full flex flex-col justify-between text-white"
-                whileHover={{ scale: 1.04 }}
+                className="bg-white/10 backdrop-blur-lg rounded-3xl p-10 shadow-2xl border border-white/20 flex flex-col justify-between items-center text-white h-full"
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: "spring", stiffness: 140, damping: 12 }}
               >
-                <div>
-                  <motion.div
-                    className="text-7xl mb-6"
-                    animate={{ scale: [1, 1.1, 1] }}
-                    transition={{ duration: 2, repeat: Infinity, repeatDelay: 2 }}
-                  >
-                    {reasons[currentIndex].emoji}
-                  </motion.div>
-                  <p
-                    className="text-2xl leading-relaxed font-serif italic text-gray-200 max-w-xl mx-auto"
-                    style={{ fontFamily: "'Georgia', serif" }}
-                  >
-                    {reasons[currentIndex].text}
-                  </p>
-                </div>
+                <motion.div
+                  className="text-7xl mb-6"
+                  animate={{ scale: [1, 1.15, 1] }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                >
+                  {reasons[currentIndex].emoji}
+                </motion.div>
 
-                <div className="flex justify-between items-center mt-8 text-pink-400">
-                  <button onClick={() => handleNavigation(-1)} aria-label="Previous reason">
+                <p
+                  className="text-2xl text-center max-w-xl mx-auto leading-relaxed"
+                  style={{
+                    fontFamily: "'Cinzel', serif",
+                    fontWeight: 700,
+                    fontSize: "1.9rem",
+                    background:
+                      "linear-gradient(90deg, #f9d423, #ff4e50, #a18cd1)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    textShadow: "0 2px 20px rgba(255, 223, 186, 0.7)",
+                  }}
+                >
+                  {reasons[currentIndex].text}
+                </p>
+
+                <div className="flex justify-between items-center mt-8 text-pink-400 w-full px-10">
+                  <button
+                    onClick={() => handleNavigation(-1)}
+                    aria-label="Previous reason"
+                  >
                     <ChevronLeft className="w-8 h-8 hover:text-pink-300 transition" />
                   </button>
-                  <Heart className="w-10 h-10 fill-pink-500 drop-shadow-lg" />
-                  <button onClick={() => handleNavigation(1)} aria-label="Next reason">
+                  <Heart className="w-10 h-10 fill-pink-500 drop-shadow-lg animate-pulse" />
+                  <button
+                    onClick={() => handleNavigation(1)}
+                    aria-label="Next reason"
+                  >
                     <ChevronRight className="w-8 h-8 hover:text-pink-300 transition" />
                   </button>
                 </div>
@@ -233,12 +266,16 @@ const ReasonsCarousel: React.FC<ReasonsCarouselProps> = ({ onComplete }) => {
           </AnimatePresence>
         </div>
 
-        <button
+        <motion.button
           onClick={onComplete}
+          whileHover={{
+            scale: 1.05,
+            boxShadow: "0 0 20px rgba(255,182,193,0.6)",
+          }}
           className="mt-12 bg-gradient-to-r from-pink-600 to-purple-600 text-white px-10 py-4 rounded-full font-semibold shadow-lg hover:shadow-2xl transition"
         >
           Continue to Memory Lane 🌸
-        </button>
+        </motion.button>
       </div>
     </div>
   );
