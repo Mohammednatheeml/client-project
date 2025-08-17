@@ -102,7 +102,11 @@ const futureGoals = [
     title: "Read Together",
     description: "Share stories and discover new worlds in books.",
   },
-  
+  {
+    emoji: "🧘‍♀️",
+    title: "Meditate & Grow",
+    description: "Find peace and mindfulness side by side.",
+  },
   {
     emoji: "🍦",
     title: "Ice Cream Dates",
