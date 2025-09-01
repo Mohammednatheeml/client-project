@@ -110,7 +110,10 @@ const MainSection: React.FC<MainSectionProps> = ({ onComplete }) => {
                 .typeString("<br>My Guiding Star ! ")
                 .pauseFor(2000)
                 .typeString("<br>My Everything !")
-               
+                .pauseFor(2000)
+                .typeString("<br>My Forever Love !")
+                .pauseFor(2000)
+                .typeString("<br>My One and Only !")
                 .pauseFor(2000)
                 .typeString("<br>3...2...1... 🎉")
                 .pauseFor(3000)
