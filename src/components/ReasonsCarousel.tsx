@@ -33,7 +33,10 @@ const reasons = [
   { text: "Your wisdom and thoughtful advice", emoji: "🦉" },
   { text: "The way you blush when I compliment you", emoji: "😳" },
   { text: "Your creativity and imagination", emoji: "🎨" },
-  
+  { text: "How you stand up for what's right", emoji: "⚖️" },
+  { text: "Your infectious enthusiasm", emoji: "🎉" },
+  { text: "The way you hold my hand", emoji: "🤝" },
+  { text: "Your beautiful mind and intelligence", emoji: "🧠" },
   { text: "How you make me laugh until my stomach hurts", emoji: "🤪" },
   { text: "Your patience with my quirks", emoji: "🙏" },
   { text: "The way you look at me like I'm your world", emoji: "🌍" },
