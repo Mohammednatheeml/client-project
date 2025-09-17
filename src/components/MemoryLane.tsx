@@ -96,7 +96,11 @@ const futureGoals = [
     title: "Beach Holidays",
     description: "Relax by the ocean and build sandcastles together.",
   },
- 
+  {
+    emoji: "🏔️",
+    title: "Mountain Adventures",
+    description: "Hike and explore breathtaking landscapes.",
+  },
   {
     emoji: "📚",
     title: "Read Together",
