@@ -91,11 +91,7 @@ const futureGoals = [
     title: "Attend Concerts",
     description: "Dance and sing along to our favorite artists live.",
   },
-  {
-    emoji: "🏖️",
-    title: "Beach Holidays",
-    description: "Relax by the ocean and build sandcastles together.",
-  },
+  
  
   {
     emoji: "📚",
