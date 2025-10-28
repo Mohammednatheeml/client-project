@@ -6,11 +6,7 @@ interface MemoryLaneProps {
 }
 
 const futureGoals = [
-  {
-    emoji: "🏡",
-    title: "Build Our Dream Home",
-    description: "Create a cozy space to call our own and make it perfect.",
-  },
+  
   {
     emoji: "✈️",
     title: "Travel the World Together",
