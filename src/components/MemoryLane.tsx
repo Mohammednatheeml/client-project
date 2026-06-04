@@ -8,7 +8,6 @@ interface MemoryLaneProps {
 const futureGoals = [
   
   
-
   {
     emoji: "🎓",
     title: "Grow and Learn",
